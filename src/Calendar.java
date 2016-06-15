@@ -5,47 +5,44 @@ import java.time.Year;
 
 public class Calendar {
 
-    public void getCalendar() {
-
-        LocalDate date = LocalDate.now();
-        int firstDayOfWeek = DayOfWeek.from(LocalDate.of(date.getYear(), date.getMonth(), 1)).getValue();
-
-        showHeadCalendar(date.getMonth(), Year.of(date.getYear()),firstDayOfWeek);
-
-        for (int i = 1; i <= date.lengthOfMonth(); i++) {
-            if (i == date.getDayOfMonth()) {
-                System.out.print((char) 27 + "[31m");
-                System.out.printf("%3d ", i);
-                System.out.print((char) 27 + "[37m");
-            } else {
-                if (((i + firstDayOfWeek) % 7 == 0) || ((i - 1 + firstDayOfWeek) % 7 == 0)) {
-                   textBlue();
-                }
-                System.out.printf("%3d ", i);
-            }
-         textWhite(i,firstDayOfWeek,date.lengthOfMonth());
-
-        }
-
-    }
 
     public void getCalendar(int month) {
+        if (month !=0) {
+            Month m = Month.of(month);
+            Year y = Year.of(LocalDate.now().getYear());
+            int lengthMonth = m.length(LocalDate.now().isLeapYear());
+            int startDayOfWeek = DayOfWeek.from(LocalDate.of(y.getValue(), m.getValue(), 1)).getValue();
 
-        Month m = Month.of(month);
-        Year y = Year.of(LocalDate.now().getYear());
-        int lengthMonth = m.length(LocalDate.now().isLeapYear());
-        int  startDayOfWeek = DayOfWeek.from(LocalDate.of(y.getValue(), m.getValue(), 1)).getValue();
+            showHeadCalendar(m, y, startDayOfWeek);
 
-        showHeadCalendar(m,y,startDayOfWeek);
+            for (int i = 1; i <= lengthMonth; i++) {
 
-        for (int i = 1; i <=lengthMonth; i++) {
+                if ((i + startDayOfWeek) % 7 == 0) textBlue();
+                System.out.printf("%3d ", i);
 
-            if ((i + startDayOfWeek) % 7 == 0) textBlue();
-            System.out.printf("%3d ", i);
+                textWhite(i, startDayOfWeek, lengthMonth);
+            }
+        }else{
+            LocalDate date = LocalDate.now();
+            int firstDayOfWeek = DayOfWeek.from(LocalDate.of(date.getYear(), date.getMonth(), 1)).getValue();
 
-               textWhite(i,startDayOfWeek,lengthMonth);
+            showHeadCalendar(date.getMonth(), Year.of(date.getYear()),firstDayOfWeek);
+
+            for (int i = 1; i <= date.lengthOfMonth(); i++) {
+                if (i == date.getDayOfMonth()) {
+                    System.out.print((char) 27 + "[31m");
+                    System.out.printf("%3d ", i);
+                    System.out.print((char) 27 + "[37m");
+                } else {
+                    if (((i + firstDayOfWeek) % 7 == 0) || ((i - 1 + firstDayOfWeek) % 7 == 0)) {
+                        textBlue();
+                    }
+                    System.out.printf("%3d ", i);
+                }
+                textWhite(i,firstDayOfWeek,date.lengthOfMonth());
+
+            }
         }
-
     }
 
     public void showHeadCalendar(Month m,Year y,int d){

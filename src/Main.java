@@ -1,17 +1,18 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Calendar c = new Calendar();
-        int month = 0;
         System.out.print("Enter the number of the month ");
-        Scanner scanner = new Scanner(System.in);
-        if(scanner.hasNextInt())
-            month = scanner.nextInt();
-        if (month >=1 && month<=12){
-            c.getCalendar(month);
-        }else
-            c.getCalendar();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String tmp = br.readLine();
+          if (tmp.isEmpty()){
+              c.getCalendar(0);
+          }else {
+              c.getCalendar(Integer.parseInt(tmp));
+          }
 
 
     }
