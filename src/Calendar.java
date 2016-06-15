@@ -18,7 +18,7 @@ public class Calendar {
                 System.out.printf("%3d ", i);
                 System.out.print((char) 27 + "[37m");
             } else {
-                if (((i + firstDayOfWeek) % 7 == 0) || ((i - 1 + firstDayOfWeek) % 7 == 0) && (i != firstDayOfWeek)) {
+                if (((i + firstDayOfWeek) % 7 == 0) || ((i - 1 + firstDayOfWeek) % 7 == 0)) {
                    textBlue();
                 }
                 System.out.printf("%3d ", i);
@@ -34,16 +34,16 @@ public class Calendar {
         Month m = Month.of(month);
         Year y = Year.of(LocalDate.now().getYear());
         int lengthMonth = m.length(LocalDate.now().isLeapYear());
-        int  firstDayOfWeek = DayOfWeek.from(LocalDate.of(y.getValue(), m.getValue(), 1)).getValue();
+        int  startDayOfWeek = DayOfWeek.from(LocalDate.of(y.getValue(), m.getValue(), 1)).getValue();
 
-        showHeadCalendar(m,y,firstDayOfWeek);
+        showHeadCalendar(m,y,startDayOfWeek);
 
         for (int i = 1; i <=lengthMonth; i++) {
 
-            if ((i + firstDayOfWeek) % 7 == 0) textBlue();
+            if ((i + startDayOfWeek) % 7 == 0) textBlue();
             System.out.printf("%3d ", i);
 
-               textWhite(i,firstDayOfWeek,lengthMonth);
+               textWhite(i,startDayOfWeek,lengthMonth);
         }
 
     }
